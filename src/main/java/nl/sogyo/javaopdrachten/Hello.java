@@ -1,6 +1,6 @@
 public class Hello {
 
-   /* This is program will print 'Hello' followed by
+   /* This program will print 'Hello' followed by
     * the startup arguments you provide.
     *  You can compile it by using the following command:
     *    'javac Hello.java'
