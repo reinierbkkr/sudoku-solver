@@ -1,3 +1,5 @@
+package nl.sogyo.javaopdrachten;
+
 public class Hello {
 
    /* This program will print 'Hello' followed by
