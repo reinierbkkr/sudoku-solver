@@ -1,13 +1,21 @@
 package nl.sogyo.javaopdrachten.sudoku;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Board {
     List<Cell> board = new ArrayList<>();
+    HashMap<Integer, ArrayList<Cell>> rows = new HashMap<>();
+    HashMap<Integer, ArrayList<Cell>> cols = new HashMap<>();
+    HashMap<Integer, ArrayList<Cell>> block = new HashMap<>();
+
+
+
 
     public Board(String input) {
         makeBoard(input);
+        // makeHashMaps();
     }
 
     public void makeBoard(String input) {
@@ -31,10 +39,20 @@ public class Board {
         return values;
     }
 
+    // void makeHashmaps(){
+    //     for (int key = 1; key < 10; key++) {
+            
+    //     }
+    // }
+
+    // List<Cell> makeList(){
+
+    // }
+
     void printallsquares(){
     int ind = 1;
     for (Cell cell : board) {
-    System.out.print(cell.square+" ");
+    System.out.print(cell.block+" ");
     if (ind%9==0){
     System.out.println();
     }
@@ -233,14 +251,14 @@ public class Board {
         for (Cell cell : board) {
             if (cell.getValue() != 0) {
                 Integer value = cell.getValue();
-                removeOptionsSameSquare(cell.getSquare(), value);
+                removeOptionsSameSquare(cell.getBlock(), value);
             }
         }
     }
 
     public void removeOptionsSameSquare(Integer square, Integer value) {
         for (Cell cell : board) {
-            if (cell.getSquare().equals(square)) {
+            if (cell.getBlock().equals(square)) {
                 cell.removeOption(value);
             }
         }

@@ -8,7 +8,7 @@ public class Cell {
     Integer value;
     Integer row;
     Integer col;
-    Integer square;
+    Integer block;
     List<Integer> options = new ArrayList<>();
 
     public Cell(Integer row, Integer col, Integer value){
@@ -48,12 +48,12 @@ public class Cell {
         this.col = col;
     }
 
-    public Integer getSquare() {
-        return this.square;
+    public Integer getBlock() {
+        return this.block;
     }
 
-    public void setSquare(Integer square) {
-        this.square = square;
+    public void setBlock(Integer square) {
+        this.block = square;
     }
 
     public List<Integer> getOptions() {
@@ -79,13 +79,13 @@ public class Cell {
     public void findSquare(){
         switch (findSquareRow()) {
             case 1:
-                square = findSquareCol();
+                block = findSquareCol();
                 break;
             case 2:
-                square = 3 + findSquareCol();
+                block = 3 + findSquareCol();
                 break;
             case 3:
-                square = 6 + findSquareCol();
+                block = 6 + findSquareCol();
         }
     }
 
