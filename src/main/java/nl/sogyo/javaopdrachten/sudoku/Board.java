@@ -6,22 +6,22 @@ import java.util.List;
 public class Board {
     List<Cell> board = new ArrayList<>();
 
-    public Board (String input){
+    public Board(String input) {
         makeBoard(input);
     }
 
-    public void makeBoard(String input){
+    public void makeBoard(String input) {
         List<Integer> values = inputToList(input);
         int ind = 0;
-        for (int i = 1; i < 10; i++) {
-            for (int j = 1; j < 10; j++) {
-                board.add(new Cell(i,j,values.get(ind)));
-                ind++;            
+        for (int row = 1; row < 10; row++) {
+            for (int col = 1; col < 10; col++) {
+                board.add(new Cell(row, col, values.get(ind)));
+                ind++;
             }
         }
     }
 
-    public static List<Integer> inputToList(String input){
+    public static List<Integer> inputToList(String input) {
         List<Integer> values = new ArrayList<>();
         String[] splitinput = input.split("");
         for (String value : splitinput) {
@@ -31,116 +31,244 @@ public class Board {
         return values;
     }
 
+    void printallsquares(){
+    int ind = 1;
+    for (Cell cell : board) {
+    System.out.print(cell.square+" ");
+    if (ind%9==0){
+    System.out.println();
+    }
+    ind++;
+    }
+    }
 
-    // void printallsquares(){
-    //     for (Cell cell : board) {
-    //         System.out.println(cell.square);
-    //     }
-    // }
-
-    public void run (){
-        for (int i = 0; i < 1; i++) {
-            removeOptions();
-            fillCells();
+    void printoptions(int limit) {
+        int ind = 1;
+        for (Cell cell : board) {
+            if (ind <= limit) {
+                System.out.print(ind + " ");
+            }
+            for (Integer option : cell.options) {
+                if (ind <= limit) {
+                    System.out.print(option);
+                }
+            }
+            if (ind <= limit) {
+                System.out.println();
+            }
+            // System.out.print(ind);
+            ind++;
         }
     }
 
-    public void fillCells(){
+    void printoptions(List<List<Integer>> optionslist) {
         int ind = 1;
-        for (Cell cell : board) {
-            System.out.print(cell.getOptions().size()+" ");
-            if (ind%9==0){
-                System.err.println();
+        for (List<Integer> options : optionslist) {
+            System.out.print(ind + " ");
+            for (Integer option : options) {
+                System.out.print(option);
             }
             ind++;
+            System.out.println();
+        }
 
-            if (cell.getOptions().size()==1){
-                System.out.println("this happens");
+    }
+
+    public void run() {
+        for (int i = 0; i < 1000; i++) {
+            
+            for (int j = 0; j < 100; j++) {
+                removeOptions();
+                fillSingleOptionCells();
+            }
+            for (int k = 1; k < 10; k++) {
+                if (k%3==0){
+                    checkUniqueOptionsRow(k);
+                } else if ((k+1)%3==0) {
+                    checkUniqueOptionsCol(k);
+                }
+            }
+        }
+    }
+
+    public void fillSingleOptionCells() {
+        int ind = 1;
+        for (Cell cell : board) {
+
+            // // this part is to print all options
+            // System.out.print(cell.getOptions().size()+" ");
+            // if (ind%9==0){
+            // System.out.println();
+            // }
+            // ind++;
+
+            if (cell.getOptions().size() == 1) {
+                // System.out.printf("cell set to value");
                 cell.setValue(cell.getOptions().get(0));
             }
         }
     }
 
-    public void removeOptions(){
-        checkRows();
-        checkCols();
-        // checkSquares();
+    public void fillCell(Integer value, Integer row, Integer col) {
+        // System.out.printf("looking for cell at row %d col %d to give value
+        // %d\n",row,col, value);
+        for (Cell cell : board) {
+            if (cell.getRow().equals(row) && cell.getCol().equals(col)) {
+                cell.setValue(value);
+            }
+        }
+
     }
 
-    public void checkCols(){
+    public void removeOptions() {
+        checkOptionsSameRow();
+        checkOptionsSameCol();
+        checkOptionsSameSquare();
+
+        // for (int i = 1; i < 10; i++) {
+        //     checkUniqueOptionsCol(i);
+        // }
+
+        // for (int i = 1; i < 10; i++) {
+        //     checkUniqueOptionsRow(i);
+        // }
+
+
+    }
+
+    public void checkUniqueOptionsCol(Integer col) {
+        List<List<Integer>> alloptions = new ArrayList<>();
         for (Cell cell : board) {
-            if (cell.getValue()!=0){
+            if (cell.getCol().equals(col)) {
+                alloptions.add(cell.getOptions());
+            }
+        }
+        // System.out.println(alloptions.size());
+        // if (col.equals(6)) {printoptions(alloptions);}
+
+        // Integer trial = 1;
+
+        for (Integer value = 1; value < 10; value++) { // iterate over all possible numbers
+            int foundind = checkUniqueOptions(value, alloptions);
+            if (foundind != 0) {
+                System.out.printf("unique option found for col:\n");
+                fillCell(value, foundind, col);
+            }
+        }
+
+    }
+
+    public void checkUniqueOptionsRow(Integer row) {
+        List<List<Integer>> alloptions = new ArrayList<>();
+        for (Cell cell : board) {
+            if (cell.getRow().equals(row)) {
+                alloptions.add(cell.getOptions());
+            }
+        }
+
+        for (Integer value = 1; value < 10; value++) { // iterate over all possible numbers
+            int foundind = checkUniqueOptions(value, alloptions);
+            if (foundind != 0) {
+                System.out.printf("unique option found for row:\n");
+                fillCell(value, row, foundind);
+            }
+        }
+
+    }
+
+    int checkUniqueOptions (Integer value, List<List<Integer>> alloptions){
+        int count = 0;
+        int ind = 1;
+        int foundind = 0;
+        // System.out.print(trial);
+        for (List<Integer> options : alloptions) { // iterate over all cells optionlists to check for number
+
+            if (options.contains(value)) { // if the trial number is in the list it is added to count
+                foundind = ind; // and index stored
+                count++;
+            }
+            ind++;
+        }
+        if (count!=1){
+            foundind=0;
+        }
+        return foundind;
+    }
+
+    public void checkOptionsSameCol() {
+        for (Cell cell : board) {
+            if (cell.getValue() != 0) {
                 Integer value = cell.getValue();
-                removeColOptions(cell.getCol(), value);
+                removeOptionsSameCol(cell.getCol(), value);
             }
         }
     }
 
-    public void removeColOptions(Integer col, Integer value){
+    public void removeOptionsSameCol(Integer col, Integer value) {
         for (Cell cell : board) {
-            if (cell.getCol().equals(col)){
+            if (cell.getCol().equals(col)) {
                 cell.removeOption(value);
             }
         }
     }
 
-    public void checkRows(){
+    public void checkOptionsSameRow() {
         for (Cell cell : board) {
-            if (cell.getValue()!=0){
+            if (cell.getValue() != 0) {
                 Integer value = cell.getValue();
-                removeRowOptions(cell.getRow(), value);
+                removeOptionsSameRow(cell.getRow(), value);
             }
         }
     }
 
-    public void removeRowOptions(Integer row, Integer value){
+    public void removeOptionsSameRow(Integer row, Integer value) {
         for (Cell cell : board) {
-            if (cell.getRow().equals(row)){
+            if (cell.getRow().equals(row)) {
                 cell.removeOption(value);
             }
         }
     }
 
-    public void checkSquares(){
+    public void checkOptionsSameSquare() {
         for (Cell cell : board) {
-            if (cell.getValue()!=0){
+            if (cell.getValue() != 0) {
                 Integer value = cell.getValue();
-                removeRowOptions(cell.getSquare(), value);
+                removeOptionsSameSquare(cell.getSquare(), value);
             }
         }
     }
 
-    public void removeSquareOptions(Integer square, Integer value){
+    public void removeOptionsSameSquare(Integer square, Integer value) {
         for (Cell cell : board) {
-            if (cell.getSquare().equals(square)){
+            if (cell.getSquare().equals(square)) {
                 cell.removeOption(value);
             }
         }
     }
 
-    public void print(){
+    public void print() {
         int ind = 0;
         System.out.println("+---------+---------+---------+");
         for (int i = 0; i < 9; i++) {
             System.out.print("|");
             for (int j = 0; j < 9; j++) {
-            
-                if (board.get(ind).value != 0){
-                    System.out.print(" "+board.get(ind).value+" ");
+
+                if (board.get(ind).value != 0) {
+                    System.out.print(" " + board.get(ind).value + " ");
                 } else {
                     System.out.print("   ");
                 }
 
                 ind++;
-                if ((j+1)%3 == 0){
+                if ((j + 1) % 3 == 0) {
                     System.out.print("|");
                 }
             }
             System.out.println();
-            if ((i+1)%3 == 0){
+            if ((i + 1) % 3 == 0) {
                 System.out.println("+---------+---------+---------+");
             }
         }
     }
-    
+
 }

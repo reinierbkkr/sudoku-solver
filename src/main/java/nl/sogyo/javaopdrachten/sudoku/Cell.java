@@ -26,7 +26,10 @@ public class Cell {
     }
 
     public void setValue(Integer value) {
+        System.out.printf("cell (row %d, col %d) set to value %d\n",this.row, this.col, value);
+
         this.value = value;
+        options.clear();
     }
 
     public Integer getRow() {
