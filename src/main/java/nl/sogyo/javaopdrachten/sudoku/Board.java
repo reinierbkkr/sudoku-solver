@@ -3,19 +3,17 @@ package nl.sogyo.javaopdrachten.sudoku;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
     List<Cell> board = new ArrayList<>();
-    HashMap<Integer, ArrayList<Cell>> rows = new HashMap<>();
-    HashMap<Integer, ArrayList<Cell>> cols = new HashMap<>();
-    HashMap<Integer, ArrayList<Cell>> block = new HashMap<>();
-
-
-
+    Map<String, List<List<Cell>>> subLists = new HashMap<>();
 
     public Board(String input) {
         makeBoard(input);
-        // makeHashMaps();
+        initializeSubLists();
+        makeSubLists();
+        
     }
 
     public void makeBoard(String input) {
@@ -39,25 +37,34 @@ public class Board {
         return values;
     }
 
-    // void makeHashmaps(){
-    //     for (int key = 1; key < 10; key++) {
-            
-    //     }
-    // }
-
-    // List<Cell> makeList(){
-
-    // }
-
-    void printallsquares(){
-    int ind = 1;
-    for (Cell cell : board) {
-    System.out.print(cell.block+" ");
-    if (ind%9==0){
-    System.out.println();
+    void initializeSubLists(){
+        subLists.put("rows", new ArrayList<>());
+        subLists.put("cols", new ArrayList<>());
+        subLists.put("blocks", new ArrayList<>());
+        for (int i = 0; i < 9; i++) {
+            subLists.get("rows").add(new ArrayList<>());
+            subLists.get("cols").add(new ArrayList<>());
+            subLists.get("blocks").add(new ArrayList<>());
+        }
     }
-    ind++;
+
+    void makeSubLists() {
+        for (Cell cell : board){
+            subLists.get("rows").get(cell.getRow()-1).add(cell);
+            subLists.get("cols").get(cell.getCol()-1).add(cell);
+            subLists.get("blocks").get(cell.getBlock()-1).add(cell);
+        }
     }
+
+    void printallsquares() {
+        int ind = 1;
+        for (Cell cell : board) {
+            System.out.print(cell.block + " ");
+            if (ind % 9 == 0) {
+                System.out.println();
+            }
+            ind++;
+        }
     }
 
     void printoptions(int limit) {
@@ -94,15 +101,15 @@ public class Board {
 
     public void run() {
         for (int i = 0; i < 1000; i++) {
-            
+
             for (int j = 0; j < 100; j++) {
                 removeOptions();
                 fillSingleOptionCells();
             }
             for (int k = 1; k < 10; k++) {
-                if (k%3==0){
+                if (k % 3 == 0) {
                     checkUniqueOptionsRow(k);
-                } else if ((k+1)%3==0) {
+                } else if ((k + 1) % 3 == 0) {
                     checkUniqueOptionsCol(k);
                 }
             }
@@ -144,13 +151,12 @@ public class Board {
         checkOptionsSameSquare();
 
         // for (int i = 1; i < 10; i++) {
-        //     checkUniqueOptionsCol(i);
+        // checkUniqueOptionsCol(i);
         // }
 
         // for (int i = 1; i < 10; i++) {
-        //     checkUniqueOptionsRow(i);
+        // checkUniqueOptionsRow(i);
         // }
-
 
     }
 
@@ -194,7 +200,7 @@ public class Board {
 
     }
 
-    int checkUniqueOptions (Integer value, List<List<Integer>> alloptions){
+    int checkUniqueOptions(Integer value, List<List<Integer>> alloptions) {
         int count = 0;
         int ind = 1;
         int foundind = 0;
@@ -207,8 +213,8 @@ public class Board {
             }
             ind++;
         }
-        if (count!=1){
-            foundind=0;
+        if (count != 1) {
+            foundind = 0;
         }
         return foundind;
     }

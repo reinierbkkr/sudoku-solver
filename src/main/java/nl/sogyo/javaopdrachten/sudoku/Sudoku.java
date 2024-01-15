@@ -5,9 +5,9 @@ public class Sudoku {
     public static void main(String[] args) {
         // Board b = new Board(args[0]);
         // Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730"); // easy board
-        Board b = new Board("000820090500000000308040007100000040006402503000090010093004000004035200000700900"); // hard board
+        // Board b = new Board("000820090500000000308040007100000040006402503000090010093004000004035200000700900"); // hard board
         // // System.out.println(b.board.get(78).value);
-        b.print();
+        // b.print();
         // b.checkCols();
         // // System.out.println(b.board.get(0).options.size());
         // for (Integer option : b.board.get(0).options) {
@@ -22,7 +22,7 @@ public class Sudoku {
 
         // }
 
-        System.out.println("");
+        // System.out.println("");
 
 
         // Cell c = new Cell(1,2,3);
@@ -41,7 +41,7 @@ public class Sudoku {
         // System.out.println("");
         // b.printoptions(9);
 
-        b.run();
+        // b.run();
         // b.checkUniqueOptionsCol(6);
 
         // for (int i = 1; i < 10; i++) {
@@ -57,7 +57,22 @@ public class Sudoku {
         // b.print();
         // b.printoptions(9);
 
+
+        // // Board b = new Board(args[0]);
+        // // Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730"); // easy board
+        Board b = new Board("000820090500000000308040007100000040006402503000090010093004000004035200000700900"); // hard board
+
         b.print();
+        b.subLists.get("cols").get(0).get(2).setValue(9);
+        b.print();
+        System.out.println(b.subLists.get("rows").get(2).get(0).getValue());
+
+
+        // System.out.println("");
+
+        // b.run();
+
+        // b.print();
         
 
     }
