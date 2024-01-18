@@ -1,6 +1,6 @@
 package nl.sogyo.javaopdrachten.sudoku;
 
-public class Sudoku {
+public class SudokuSolver {
 
     public static void main(String[] args) {
         // Board b = new Board(args[0]);
@@ -63,9 +63,9 @@ public class Sudoku {
         Board b = new Board("000820090500000000308040007100000040006402503000090010093004000004035200000700900"); // hard board
 
         b.print();
-        b.subLists.get("cols").get(0).get(2).setValue(9);
-        b.print();
-        System.out.println(b.subLists.get("rows").get(2).get(0).getValue());
+//        b.subSetListsMap.get("cols").get(0).get(2).setValue(9);
+//        b.print();
+//        System.out.println(b.subSetListsMap.get("rows").get(2).get(0).getValue());
 
 
         // System.out.println("");
