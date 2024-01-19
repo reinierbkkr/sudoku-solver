@@ -37,6 +37,7 @@ public class BoardTest {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.removeAllOptions();
         b.setValueSingleOptionCells();
+        b.detectChangedCell();
 
         assertTrue(b.isChanged());
     }
@@ -49,6 +50,7 @@ public class BoardTest {
         b.removeAllOptions();
 //        System.out.println("unique");
         b.setValueUniqueOptionCells();
+        b.detectChangedCell();
 
         assertTrue(b.isChanged());
 
@@ -59,6 +61,7 @@ public class BoardTest {
     void isChangedTestOneCellChanged() throws CellHasValueException{
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
+        b.detectChangedCell();
 
         assertTrue(b.isChanged());
     }
@@ -69,24 +72,39 @@ public class BoardTest {
         b.board.get(2).setValue(3);
         b.board.get(3).setValue(3);
 
+        b.detectChangedCell();
+
         assertTrue(b.isChanged());
     }
 
     @Test
-    void isChangedTestIfCellChangedReset() throws CellHasValueException{
+    void isChangedTest() throws CellHasValueException{
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
         b.board.get(3).setValue(3);
 
+        b.detectChangedCell();
+
+        assertTrue(b.isChanged());
+
+    }
+
+    @Test
+    void isChangedResetWhenGotTest() throws CellHasValueException{
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.board.get(2).setValue(3);
+        b.board.get(3).setValue(3);
+
+        b.detectChangedCell();
         b.isChanged();
 
         assertFalse(b.isChanged());
 
     }
-
     @Test
     void isChangedTestNoCellsChanged(){
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.detectChangedCell();
 
         assertFalse(b.isChanged());
     }
@@ -94,7 +112,7 @@ public class BoardTest {
     @Test
     void hasConflictTest(){
         Board b = new Board("660000000000000000000000000000000000000000000000000000000000000000000000000000000");
-        b.hasConflict();
+        b.detectConflict();
 
         assertTrue(b.conflict);
 
@@ -103,7 +121,7 @@ public class BoardTest {
     @Test
     void hasConflict2Test(){
         Board b = new Board("000000000000000000000000000000000000000000000000000000000000000000000000000000033");
-        b.hasConflict();
+        b.detectConflict();
 
         assertTrue(b.conflict);
 
@@ -111,7 +129,7 @@ public class BoardTest {
     @Test
     void hasConflictBlockTest(){
         Board b = new Board("600000000006000000000000000000000000000000000000000000000000000000000000000000000");
-        b.hasConflict();
+        b.detectConflict();
 
         assertTrue(b.conflict);
 
@@ -120,7 +138,7 @@ public class BoardTest {
     @Test
     void hasConflictRowTest(){
         Board b = new Board("000000000000000000000000000000000000000000000000000000000000000000000003000000003");
-        b.hasConflict();
+        b.detectConflict();
 
         assertTrue(b.conflict);
 
@@ -128,9 +146,32 @@ public class BoardTest {
     @Test
     void hasConflictNoConflictTest(){
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
-        b.hasConflict();
+        b.detectConflict();
 
         assertFalse(b.conflict);
 
+    }
+
+    @Test
+    void detectSolvedTest(){
+        Board b = new Board("666666666666666666666666666666666666666666666666666666666666666666666666666666666");
+        b.detectSolved();
+
+        assertTrue(b.solved);
+    }
+    @Test
+    void detectSolvedNotSolvedTest(){
+        Board b = new Board("666666666666666666666666666666666666666666666666666666666666666666666666666066666");
+        b.detectSolved();
+
+        assertFalse(b.solved);
+    }
+
+    @Test
+    void solveTest() throws CellHasValueException{
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.print();
+        b.solve();
+        b.print();
     }
 }

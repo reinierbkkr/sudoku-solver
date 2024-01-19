@@ -15,12 +15,23 @@ public class Board {
         put(SubSetType.Block, new ArrayList<SubSet>());
     }};
 
-    boolean conflict = false;
+    boolean changed = true;
 
+    boolean conflict = false;
+    boolean solved = false;
     public Board(String input) {
         makeBoard(input);
         initializeSubSetsInSubSetLists();
         fillSubSetsWithCells();
+    }
+
+    public boolean isChanged() {
+        if (changed) {
+            changed = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void makeBoard(String input) {
@@ -60,6 +71,34 @@ public class Board {
         }
     }
 
+    void solve() throws CellHasValueException {
+        detectConflict();
+        int simplecounter = 0;
+        int complexcounter = 0;
+
+        while (!conflict && !solved && changed) {
+            while (!conflict && !solved && changed) {
+                detectConflict();
+                removeAllOptions();
+                setValueSingleOptionCells();
+                detectChangedCell();
+                simplecounter++;
+            }
+            removeAllOptions();
+            setValueUniqueOptionCells();
+            detectChangedCell();
+            complexcounter++;
+        }
+        if (solved){
+            System.out.println("Solved!");
+        }
+        if (conflict){
+            System.out.println("Conflict!");
+        }
+        System.out.printf("End. Simple loops %d, complex loops %d.\n",simplecounter,complexcounter);
+    }
+
+
     public void setValueSingleOptionCells() throws CellHasValueException {
         for (Cell cell : board) {
             if (cell.getOptions().size() == 1) {
@@ -77,14 +116,15 @@ public class Board {
     }
 
 
-    public boolean isChanged(){
-        boolean isChanged = false;
+    public void detectChangedCell(){
         for (Cell cell : board){
             if (cell.isChanged()){
-                isChanged = true;
+                changed = true;
+                break;
+            } else {
+                changed = false;
             }
         }
-        return isChanged;
     }
 
     public void removeAllOptions() {
@@ -95,7 +135,7 @@ public class Board {
         }
     }
 
-    public void hasConflict(){
+    public void detectConflict(){
         for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
             conflict = subSetsHaveConflicts(entry);
             if (conflict) {
@@ -133,6 +173,16 @@ public class Board {
             System.out.println();
             if ((i + 1) % 3 == 0) {
                 System.out.println("+---------+---------+---------+");
+            }
+        }
+    }
+
+    public void detectSolved(){
+        solved = true;
+        for (Cell cell : board){
+            if (cell.getValue()==0){
+                solved = false;
+                break;
             }
         }
     }
