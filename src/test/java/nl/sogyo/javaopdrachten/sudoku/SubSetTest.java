@@ -4,9 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SubSetTest {
@@ -45,7 +42,7 @@ public class SubSetTest {
         subset.removeOption(9);
         subset.getCells().get(2).options.add(9);
 
-        subset.fillUniqueOptions();
+        subset.setValueUniqueOptionCells();
 
         int value = subset.getCells().get(2).getValue();
 

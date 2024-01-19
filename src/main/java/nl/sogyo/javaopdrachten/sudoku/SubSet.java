@@ -4,7 +4,6 @@ import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class SubSet {
     private final SubSetType type;
@@ -43,12 +42,13 @@ public class SubSet {
         }
     }
 
-    public void fillUniqueOptions() throws CellHasValueException{
+    public void setValueUniqueOptionCells() throws CellHasValueException{
         for (int value = 1; value < 10; value++) {
             int foundIndex = checkIfValueOptionIsUnique(value, getAllOptions());
             if (foundIndex != -1) {
 //                System.out.printf("unique option found for col:\n");
                 setCellValue(foundIndex, value);
+                removeAllOptions();
             }
         }
     }

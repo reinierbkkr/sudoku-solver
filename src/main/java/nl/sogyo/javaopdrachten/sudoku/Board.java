@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
+    static int BoardId = 0;
+
     List<Cell> board = new ArrayList<>();
     Map<SubSetType, List<SubSet>> subSetListsMap = new HashMap<SubSetType, List<SubSet>>(){{
         put(SubSetType.Row, new ArrayList<SubSet>());
@@ -23,15 +25,6 @@ public class Board {
         makeBoard(input);
         initializeSubSetsInSubSetLists();
         fillSubSetsWithCells();
-    }
-
-    public boolean isChanged() {
-        if (changed) {
-            changed = false;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public void makeBoard(String input) {
@@ -88,6 +81,7 @@ public class Board {
             setValueUniqueOptionCells();
             detectChangedCell();
             complexcounter++;
+            detectSolved();
         }
         if (solved){
             System.out.println("Solved!");
@@ -110,7 +104,8 @@ public class Board {
     public void setValueUniqueOptionCells()throws CellHasValueException {
         for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
             for (SubSet subset : entry.getValue()){
-                subset.fillUniqueOptions();
+                subset.setValueUniqueOptionCells();
+                removeAllOptions();
             }
         }
     }
