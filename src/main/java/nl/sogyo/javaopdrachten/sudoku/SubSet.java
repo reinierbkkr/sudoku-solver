@@ -8,7 +8,7 @@ import java.util.List;
 public class SubSet {
     private final SubSetType type;
 
-    private ArrayList<Cell> cells = new ArrayList<>();
+    private final ArrayList<Cell> cells = new ArrayList<>();
 
     public SubSet(SubSetType type){
         this.type = type;

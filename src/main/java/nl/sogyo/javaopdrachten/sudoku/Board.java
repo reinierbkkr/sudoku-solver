@@ -58,50 +58,6 @@ public class Board {
         }
     }
 
-//    void printallsquares() {
-//        int ind = 1;
-//        for (Cell cell : board) {
-//            System.out.print(cell.block + " ");
-//            if (ind % 9 == 0) {
-//                System.out.println();
-//            }
-//            ind++;
-//        }
-//    }
-
-//    void printoptions(int limit) {
-//        int ind = 1;
-//        for (Cell cell : board) {
-//            if (ind <= limit) {
-//                System.out.print(ind + " ");
-//            }
-//            for (Integer option : cell.options) {
-//                if (ind <= limit) {
-//                    System.out.print(option);
-//                }
-//            }
-//            if (ind <= limit) {
-//                System.out.println();
-//            }
-//            // System.out.print(ind);
-//            ind++;
-//        }
-//    }
-
-//    void printoptions(List<List<Integer>> optionslist) {
-//        int ind = 1;
-//        for (List<Integer> options : optionslist) {
-//            System.out.print(ind + " ");
-//            for (Integer option : options) {
-//                System.out.print(option);
-//            }
-//            ind++;
-//            System.out.println();
-//        }
-//
-//    }
-
-
     public void setValueSingleOptionCells() throws CellHasValueException {
         for (Cell cell : board) {
             if (cell.getOptions().size() == 1) {
@@ -110,17 +66,14 @@ public class Board {
         }
     }
 
-    // denk niet meer nodig
-//    public void fillCell(Integer value, Integer row, Integer col) {
-//        // System.out.printf("looking for cell at row %d col %d to give value
-//        // %d\n",row,col, value);
-//        for (Cell cell : board) {
-//            if (cell.getRow().equals(row) && cell.getColumn().equals(col)) {
-//                cell.setValue(value);
-//            }
-//        }
-//
-//    }
+    public void setValueUniqueOptionCells()throws CellHasValueException {
+        for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
+            for (SubSet subset : entry.getValue()){
+                subset.fillUniqueOptions();
+            }
+        }
+    }
+
 
     public boolean isChanged(){
         boolean isChanged = false;

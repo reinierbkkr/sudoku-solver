@@ -37,7 +37,21 @@ public class BoardTest {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.removeAllOptions();
         b.setValueSingleOptionCells();
+
         assertTrue(b.isChanged());
+    }
+
+    @Test
+    void setValueUniqueOptionCellsTest()throws CellHasValueException {
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.removeAllOptions();
+        b.setValueSingleOptionCells();
+        b.removeAllOptions();
+//        System.out.println("unique");
+        b.setValueUniqueOptionCells();
+
+        assertTrue(b.isChanged());
+
     }
 
 
