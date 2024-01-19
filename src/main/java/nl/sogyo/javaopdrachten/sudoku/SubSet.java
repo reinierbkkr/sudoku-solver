@@ -10,7 +10,7 @@ public class SubSet {
 
     private final ArrayList<Cell> cells = new ArrayList<>();
 
-    public SubSet(SubSetType type){
+    public SubSet(SubSetType type) {
         this.type = type;
     }
 
@@ -22,31 +22,32 @@ public class SubSet {
         return type;
     }
 
-    public Cell getCell(int index){
+    public Cell getCell(int index) {
         return cells.get(index);
     }
 
-    public void addCell(Cell cell){
+    public void addCell(Cell cell) {
         cells.add(cell);
     }
-    public void removeAllOptions(){
-        for (Cell cell : cells){
-            if (cell.getValue()!=0){
+
+    public void removeAllOptions() {
+        for (Cell cell : cells) {
+            if (cell.getValue() != 0) {
                 removeOption(cell.getValue());
             }
         }
     }
-    public void removeOption(int value){
-        for (Cell cell : cells){
+
+    public void removeOption(int value) {
+        for (Cell cell : cells) {
             cell.removeOption(value);
         }
     }
 
-    public void setValueUniqueOptionCells() throws CellHasValueException{
+    public void setValueUniqueOptionCells() throws CellHasValueException {
         for (int value = 1; value < 10; value++) {
             int foundIndex = checkIfValueOptionIsUnique(value, getAllOptions());
             if (foundIndex != -1) {
-//                System.out.printf("unique option found for col:\n");
                 setCellValue(foundIndex, value);
                 removeAllOptions();
             }
@@ -55,7 +56,7 @@ public class SubSet {
 
     ArrayList<ArrayList<Integer>> getAllOptions() {
         ArrayList<ArrayList<Integer>> allOptions = new ArrayList<>();
-        for (Cell cell : cells){
+        for (Cell cell : cells) {
             allOptions.add(cell.getOptions());
         }
         return allOptions;
@@ -65,7 +66,6 @@ public class SubSet {
         int count = 0;
         int index = 0;
         int foundIndex = -1;
-        // System.out.print(trial);
         for (ArrayList<Integer> options : allOptions) { // iterate over all cells optionlists to check for number
 
             if (options.contains(value)) { // if the trial number is in the list it is added to count
@@ -80,16 +80,16 @@ public class SubSet {
         return foundIndex;
     }
 
-    public void setCellValue (int index, int value) throws CellHasValueException{
+    public void setCellValue(int index, int value) throws CellHasValueException {
         cells.get(index).setValue(value);
     }
 
-    public boolean hasConflict (){
+    public boolean hasConflict() {
         boolean hasConflict = false;
         ArrayList<Integer> allValues = getAllValues();
-        for (int value = 1; value < 10; value++){
-            int freq = Collections.frequency(allValues,value);
-            hasConflict = (freq>1);
+        for (int value = 1; value < 10; value++) {
+            int freq = Collections.frequency(allValues, value);
+            hasConflict = (freq > 1);
             if (hasConflict) {
                 break;
             }
@@ -97,9 +97,9 @@ public class SubSet {
         return hasConflict;
     }
 
-    public ArrayList<Integer> getAllValues(){
+    public ArrayList<Integer> getAllValues() {
         ArrayList<Integer> allValues = new ArrayList<>();
-        for (Cell cell : cells){
+        for (Cell cell : cells) {
             if (cell.getValue() != 0) {
                 allValues.add(cell.getValue());
             }

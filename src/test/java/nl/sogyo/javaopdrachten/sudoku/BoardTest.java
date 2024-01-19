@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
     @Test
-    void initializeSubSetsTest(){
+    void initializeSubSetsTest() {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         List<SubSet> list = b.subSetListsMap.get(SubSetType.Column);
 
@@ -18,7 +18,7 @@ public class BoardTest {
     }
 
     @Test
-    void fillSubSetsWithCellsTest(){
+    void fillSubSetsWithCellsTest() {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         SubSet columns = b.subSetListsMap.get(SubSetType.Column).get(0);
 
@@ -26,14 +26,15 @@ public class BoardTest {
     }
 
     @Test
-    void setRemoveOptionTest(){
+    void setRemoveOptionTest() {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.removeAllOptions();
 
-        assertTrue(b.board.get(2).getOptions().size()!=9);
+        assertTrue(b.board.get(2).getOptions().size() != 9);
     }
+
     @Test
-    void setValueSingleOptionCellsTest() throws CellHasValueException{
+    void setValueSingleOptionCellsTest() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.removeAllOptions();
         b.setValueSingleOptionCells();
@@ -43,7 +44,7 @@ public class BoardTest {
     }
 
     @Test
-    void setValueUniqueOptionCellsTest()throws CellHasValueException {
+    void setValueUniqueOptionCellsTest() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.removeAllOptions();
         b.setValueSingleOptionCells();
@@ -58,7 +59,7 @@ public class BoardTest {
 
 
     @Test
-    void isChangedTestOneCellChanged() throws CellHasValueException{
+    void isChangedTestOneCellChanged() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
         b.detectChangedCell();
@@ -67,18 +68,7 @@ public class BoardTest {
     }
 
     @Test
-    void isChangedTest2CellsChanged() throws CellHasValueException{
-        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
-        b.board.get(2).setValue(3);
-        b.board.get(3).setValue(3);
-
-        b.detectChangedCell();
-
-        assertTrue(b.changed);
-    }
-
-    @Test
-    void isChangedTest() throws CellHasValueException{
+    void isChangedTest2CellsChanged() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
         b.board.get(3).setValue(3);
@@ -86,23 +76,23 @@ public class BoardTest {
         b.detectChangedCell();
 
         assertTrue(b.changed);
+    }
+
+    @Test
+    void isChangedTest() throws CellHasValueException {
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.board.get(2).setValue(3);
+        b.board.get(3).setValue(3);
+
+        b.detectChangedCell();
+
+        assertTrue(b.changed);
 
     }
 
-//    @Test
-//    void isChangedResetWhenGotTest() throws CellHasValueException{
-//        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
-//        b.board.get(2).setValue(3);
-//        b.board.get(3).setValue(3);
-//
-//        b.detectChangedCell();
-//        b.isChanged();
-//
-//        assertFalse(b.isChanged());
-//
-//    }
+
     @Test
-    void isChangedTestNoCellsChanged(){
+    void isChangedTestNoCellsChanged() {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.detectChangedCell();
 
@@ -110,7 +100,7 @@ public class BoardTest {
     }
 
     @Test
-    void hasConflictTest(){
+    void hasConflictTest() {
         Board b = new Board("660000000000000000000000000000000000000000000000000000000000000000000000000000000");
         b.detectConflict();
 
@@ -119,15 +109,16 @@ public class BoardTest {
     }
 
     @Test
-    void hasConflict2Test(){
+    void hasConflict2Test() {
         Board b = new Board("000000000000000000000000000000000000000000000000000000000000000000000000000000033");
         b.detectConflict();
 
         assertTrue(b.conflict);
 
     }
+
     @Test
-    void hasConflictBlockTest(){
+    void hasConflictBlockTest() {
         Board b = new Board("600000000006000000000000000000000000000000000000000000000000000000000000000000000");
         b.detectConflict();
 
@@ -136,15 +127,16 @@ public class BoardTest {
     }
 
     @Test
-    void hasConflictRowTest(){
+    void hasConflictRowTest() {
         Board b = new Board("000000000000000000000000000000000000000000000000000000000000000000000003000000003");
         b.detectConflict();
 
         assertTrue(b.conflict);
 
     }
+
     @Test
-    void hasConflictNoConflictTest(){
+    void hasConflictNoConflictTest() {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.detectConflict();
 
@@ -153,14 +145,15 @@ public class BoardTest {
     }
 
     @Test
-    void detectSolvedTest(){
+    void detectSolvedTest() {
         Board b = new Board("666666666666666666666666666666666666666666666666666666666666666666666666666666666");
         b.detectSolved();
 
         assertTrue(b.solved);
     }
+
     @Test
-    void detectSolvedNotSolvedTest(){
+    void detectSolvedNotSolvedTest() {
         Board b = new Board("666666666666666666666666666666666666666666666666666666666666666666666666666066666");
         b.detectSolved();
 
@@ -168,7 +161,7 @@ public class BoardTest {
     }
 
     @Test
-    void solveEasySudokuTest() throws CellHasValueException{
+    void solveEasySudokuTest() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
 //        b.print();
         b.solve();
@@ -177,7 +170,7 @@ public class BoardTest {
     }
 
     @Test
-    void solveHarderSudokuTest() throws CellHasValueException{
+    void solveHarderSudokuTest() throws CellHasValueException {
         Board b = new Board("000820090500000000308040007100000040006402503000090010093004000004035200000700900");
 //        b.print();
         b.solve();
@@ -186,7 +179,7 @@ public class BoardTest {
     }
 
     @Test
-    void solveHardestSudokuTest() throws CellHasValueException{
+    void solveHardestSudokuTest() throws CellHasValueException {
         Board b = new Board("500007010040000000190000000900000045000309006403006000730500000000002079010060000");
         b.print();
         b.solve();

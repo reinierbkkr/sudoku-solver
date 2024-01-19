@@ -8,22 +8,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SubSetTest {
     @Test
-    void removeAllOptionsTest() throws CellHasValueException{
+    void removeAllOptionsTest() throws CellHasValueException {
         SubSet subset = new SubSet(SubSetType.Row);
-        for (int i =0;i<9;i++){
-            subset.addCell(new Cell(1,1,0));
+        for (int i = 0; i < 9; i++) {
+            subset.addCell(new Cell(1, 1, 0));
         }
-        subset.setCellValue(0,1);
-        subset.setCellValue(1,2);
+        subset.setCellValue(0, 1);
+        subset.setCellValue(1, 2);
         subset.removeAllOptions();
 
         assertEquals(7, subset.getCell(2).getOptions().size());
     }
+
     @Test
-    void checkIfValueOptionIsUniqueTest(){
+    void checkIfValueOptionIsUniqueTest() {
         SubSet subset = new SubSet(SubSetType.Row);
-        for (int i =0;i<9;i++){
-            subset.addCell(new Cell(1,1,0));
+        for (int i = 0; i < 9; i++) {
+            subset.addCell(new Cell(1, 1, 0));
         }
         subset.removeOption(9);
         subset.getCells().get(2).options.add(9);
@@ -33,11 +34,12 @@ public class SubSetTest {
 
         assertEquals(2, returnedIndex);
     }
+
     @Test
-    void fillUniqueOptionsTest() throws CellHasValueException{
+    void fillUniqueOptionsTest() throws CellHasValueException {
         SubSet subset = new SubSet(SubSetType.Row);
-        for (int i =0;i<9;i++){
-            subset.addCell(new Cell(1,1,0));
+        for (int i = 0; i < 9; i++) {
+            subset.addCell(new Cell(1, 1, 0));
         }
         subset.removeOption(9);
         subset.getCells().get(2).options.add(9);
@@ -51,10 +53,10 @@ public class SubSetTest {
 
 
     @Test
-    void checkIfValueOptionIsUniqueButNoUniqueTest(){
+    void checkIfValueOptionIsUniqueButNoUniqueTest() {
         SubSet subset = new SubSet(SubSetType.Row);
-        for (int i =0;i<9;i++){
-            subset.addCell(new Cell(1,1,0));
+        for (int i = 0; i < 9; i++) {
+            subset.addCell(new Cell(1, 1, 0));
         }
         subset.removeOption(9);
 
@@ -64,19 +66,20 @@ public class SubSetTest {
     }
 
     @Test
-    void hasConflictTest(){
+    void hasConflictTest() {
         SubSet subset = new SubSet(SubSetType.Row);
-        subset.addCell(new Cell(1,1,1));
-        subset.addCell(new Cell(1,1,1));
+        subset.addCell(new Cell(1, 1, 1));
+        subset.addCell(new Cell(1, 1, 1));
 
         assertTrue(subset.hasConflict());
 
     }
+
     @Test
-    void hasConflictNoConflictTest(){
+    void hasConflictNoConflictTest() {
         SubSet subset = new SubSet(SubSetType.Row);
-        subset.addCell(new Cell(1,1,0));
-        subset.addCell(new Cell(1,1,0));
+        subset.addCell(new Cell(1, 1, 0));
+        subset.addCell(new Cell(1, 1, 0));
 
         assertFalse(subset.hasConflict());
 

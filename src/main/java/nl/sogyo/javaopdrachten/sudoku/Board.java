@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    static int BoardId = 0;
-
     List<Cell> board = new ArrayList<>();
-    Map<SubSetType, List<SubSet>> subSetListsMap = new HashMap<SubSetType, List<SubSet>>(){{
+    Map<SubSetType, List<SubSet>> subSetListsMap = new HashMap<SubSetType, List<SubSet>>() {{
         put(SubSetType.Row, new ArrayList<SubSet>());
         put(SubSetType.Column, new ArrayList<SubSet>());
         put(SubSetType.Block, new ArrayList<SubSet>());
@@ -21,6 +19,7 @@ public class Board {
 
     boolean conflict = false;
     boolean solved = false;
+
     public Board(String input) {
         makeBoard(input);
         initializeSubSetsInSubSetLists();
@@ -33,7 +32,7 @@ public class Board {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 board.add(new Cell(row, column, values.get(index)));
-                index ++;
+                index++;
             }
         }
     }
@@ -42,13 +41,12 @@ public class Board {
         List<Integer> values = new ArrayList<>();
         String[] splitinput = input.split("");
         for (String value : splitinput) {
-            // System.out.println(value);
             values.add(Integer.parseInt(value));
         }
         return values;
     }
 
-    void initializeSubSetsInSubSetLists(){
+    void initializeSubSetsInSubSetLists() {
         for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
             for (int i = 0; i < 9; i++) { // refactor
                 entry.getValue().add(new SubSet(entry.getKey()));
@@ -57,7 +55,7 @@ public class Board {
     }
 
     void fillSubSetsWithCells() {
-        for (Cell cell : board){
+        for (Cell cell : board) {
             subSetListsMap.get(SubSetType.Row).get(cell.getRow()).addCell(cell);
             subSetListsMap.get(SubSetType.Column).get(cell.getColumn()).addCell(cell);
             subSetListsMap.get(SubSetType.Block).get(cell.getBlock()).addCell(cell);
@@ -83,13 +81,13 @@ public class Board {
             complexcounter++;
             detectSolved();
         }
-        if (solved){
+        if (solved) {
             System.out.println("Solved!");
         }
-        if (conflict){
+        if (conflict) {
             System.out.println("Conflict!");
         }
-        System.out.printf("End. Simple loops %d, complex loops %d.\n",simplecounter,complexcounter);
+        System.out.printf("End. Simple loops %d, complex loops %d.\n", simplecounter, complexcounter);
     }
 
 
@@ -101,9 +99,9 @@ public class Board {
         }
     }
 
-    public void setValueUniqueOptionCells()throws CellHasValueException {
+    public void setValueUniqueOptionCells() throws CellHasValueException {
         for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
-            for (SubSet subset : entry.getValue()){
+            for (SubSet subset : entry.getValue()) {
                 subset.setValueUniqueOptionCells();
                 removeAllOptions();
             }
@@ -111,9 +109,9 @@ public class Board {
     }
 
 
-    public void detectChangedCell(){
-        for (Cell cell : board){
-            if (cell.isChanged()){
+    public void detectChangedCell() {
+        for (Cell cell : board) {
+            if (cell.isChanged()) {
                 changed = true;
                 break;
             } else {
@@ -124,13 +122,13 @@ public class Board {
 
     public void removeAllOptions() {
         for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
-            for (SubSet subset : entry.getValue()){
+            for (SubSet subset : entry.getValue()) {
                 subset.removeAllOptions();
             }
         }
     }
 
-    public void detectConflict(){
+    public void detectConflict() {
         for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
             conflict = subSetsHaveConflicts(entry);
             if (conflict) {
@@ -140,7 +138,7 @@ public class Board {
     }
 
     private boolean subSetsHaveConflicts(Map.Entry<SubSetType, List<SubSet>> entry) {
-        for (SubSet subset : entry.getValue()){
+        for (SubSet subset : entry.getValue()) {
             if (subset.hasConflict())
                 return true;
         }
@@ -172,10 +170,10 @@ public class Board {
         }
     }
 
-    public void detectSolved(){
+    public void detectSolved() {
         solved = true;
-        for (Cell cell : board){
-            if (cell.getValue()==0){
+        for (Cell cell : board) {
+            if (cell.getValue() == 0) {
                 solved = false;
                 break;
             }

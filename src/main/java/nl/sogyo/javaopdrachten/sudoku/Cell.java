@@ -15,12 +15,13 @@ public class Cell {
     boolean changed = false;
 
     ArrayList<Integer> options = new ArrayList<>();
-    public Cell(int row, int column, int value){
+
+    public Cell(int row, int column, int value) {
         this.row = row;
         this.column = column;
         this.value = value;
         findBlock();
-        if (value == 0){
+        if (value == 0) {
             initializeOptions();
         }
     }
@@ -39,9 +40,7 @@ public class Cell {
     }
 
     public void setValue(int value) throws CellHasValueException {
-        if (this.value==0) {
-//            System.out.printf("cell (row %d, col %d) set to value %d\n", this.row, this.column, value);
-
+        if (this.value == 0) {
             this.value = value;
             options.clear();
             changed = true;
@@ -82,18 +81,17 @@ public class Cell {
         this.options = options;
     }
 
-    public void initializeOptions(){
+    public void initializeOptions() {
         for (int value = 1; value < 10; value++) {
             options.add(value);
         }
-        // System.out.println("this happens");
     }
 
-    public void removeOption(int value){
+    public void removeOption(int value) {
         options.remove(Integer.valueOf(value));
     }
-    
-    public void findBlock(){
+
+    public void findBlock() {
         switch (findBlockRow()) {
             case 0:
                 block = findBlockColumn();
@@ -106,31 +104,43 @@ public class Cell {
         }
     }
 
-    public int findBlockColumn(){
+    public int findBlockColumn() {
         int blockColumn = -1;
         switch (column) {
-            case 0: case 1: case 2:
+            case 0:
+            case 1:
+            case 2:
                 blockColumn = 0;
                 break;
-            case 3: case 4: case 5:
+            case 3:
+            case 4:
+            case 5:
                 blockColumn = 1;
                 break;
-            case 6: case 7: case 8:
+            case 6:
+            case 7:
+            case 8:
                 blockColumn = 2;
         }
         return blockColumn;
     }
 
-    public int findBlockRow(){
+    public int findBlockRow() {
         int blockRow = -1;
         switch (row) {
-            case 0: case 1: case 2:
+            case 0:
+            case 1:
+            case 2:
                 blockRow = 0;
                 break;
-            case 3: case 4: case 5:
+            case 3:
+            case 4:
+            case 5:
                 blockRow = 1;
                 break;
-            case 6: case 7: case 8:
+            case 6:
+            case 7:
+            case 8:
                 blockRow = 2;
         }
         return blockRow;
