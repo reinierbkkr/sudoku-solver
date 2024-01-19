@@ -15,6 +15,8 @@ public class Board {
         put(SubSetType.Block, new ArrayList<SubSet>());
     }};
 
+    boolean conflict = false;
+
     public Board(String input) {
         makeBoard(input);
         initializeSubSetsInSubSetLists();
@@ -91,6 +93,23 @@ public class Board {
                 subset.removeAllOptions();
             }
         }
+    }
+
+    public void hasConflict(){
+        for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
+            conflict = subSetsHaveConflicts(entry);
+            if (conflict) {
+                break;
+            }
+        }
+    }
+
+    private boolean subSetsHaveConflicts(Map.Entry<SubSetType, List<SubSet>> entry) {
+        for (SubSet subset : entry.getValue()){
+            if (subset.hasConflict())
+                return true;
+        }
+        return false;
     }
 
     public void print() {

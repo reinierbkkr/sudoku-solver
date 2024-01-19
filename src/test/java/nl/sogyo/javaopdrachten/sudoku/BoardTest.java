@@ -90,4 +90,47 @@ public class BoardTest {
 
         assertFalse(b.isChanged());
     }
+
+    @Test
+    void hasConflictTest(){
+        Board b = new Board("660000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        b.hasConflict();
+
+        assertTrue(b.conflict);
+
+    }
+
+    @Test
+    void hasConflict2Test(){
+        Board b = new Board("000000000000000000000000000000000000000000000000000000000000000000000000000000033");
+        b.hasConflict();
+
+        assertTrue(b.conflict);
+
+    }
+    @Test
+    void hasConflictBlockTest(){
+        Board b = new Board("600000000006000000000000000000000000000000000000000000000000000000000000000000000");
+        b.hasConflict();
+
+        assertTrue(b.conflict);
+
+    }
+
+    @Test
+    void hasConflictRowTest(){
+        Board b = new Board("000000000000000000000000000000000000000000000000000000000000000000000003000000003");
+        b.hasConflict();
+
+        assertTrue(b.conflict);
+
+    }
+    @Test
+    void hasConflictNoConflictTest(){
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.hasConflict();
+
+        assertFalse(b.conflict);
+
+    }
 }

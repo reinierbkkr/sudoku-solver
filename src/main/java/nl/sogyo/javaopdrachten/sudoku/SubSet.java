@@ -88,7 +88,7 @@ public class SubSet {
         boolean hasConflict = false;
         ArrayList<Integer> allValues = getAllValues();
         for (int value = 1; value < 10; value++){
-            int freq = Collections.frequency(allValues,Integer.valueOf(value));
+            int freq = Collections.frequency(allValues,value);
             hasConflict = (freq>1);
             if (hasConflict) {
                 break;
