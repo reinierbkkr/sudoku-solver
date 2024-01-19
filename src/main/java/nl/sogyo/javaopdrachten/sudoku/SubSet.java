@@ -1,5 +1,7 @@
 package nl.sogyo.javaopdrachten.sudoku;
 
+import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class SubSet {
         }
     }
 
-    public void fillUniqueOptions(){
+    public void fillUniqueOptions() throws CellHasValueException{
         for (int value = 1; value < 10; value++) {
             int foundIndex = checkIfValueOptionIsUnique(value, getAllOptions());
             if (foundIndex != -1) {
@@ -71,7 +73,7 @@ public class SubSet {
         return foundIndex;
     }
 
-    public void setCellValue (int index, int value){
+    public void setCellValue (int index, int value) throws CellHasValueException{
         cells.get(index).setValue(value);
     }
 

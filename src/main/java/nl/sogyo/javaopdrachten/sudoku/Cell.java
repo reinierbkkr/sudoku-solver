@@ -1,5 +1,7 @@
 package nl.sogyo.javaopdrachten.sudoku;
 
+import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +38,16 @@ public class Cell {
         return this.value;
     }
 
-    public void setValue(int value) {
-        System.out.printf("cell (row %d, col %d) set to value %d\n",this.row, this.column, value);
+    public void setValue(int value) throws CellHasValueException {
+        if (this.value==0) {
+            System.out.printf("cell (row %d, col %d) set to value %d\n", this.row, this.column, value);
 
-        this.value = value;
-        options.clear();
-        changed = true;
+            this.value = value;
+            options.clear();
+            changed = true;
+        } else {
+            throw new CellHasValueException();
+        }
     }
 
     public Integer getRow() {

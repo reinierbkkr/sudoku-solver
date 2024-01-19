@@ -1,5 +1,7 @@
 package nl.sogyo.javaopdrachten.sudoku;
 
+import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +26,7 @@ public class Board {
         int index = 0;
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                board.add(new Cell(row, column, values.get(index )));
+                board.add(new Cell(row, column, values.get(index)));
                 index ++;
             }
         }
@@ -116,7 +118,7 @@ public class Board {
 //        }
 //    }
 
-    public void fillSingleOptionCells() {
+    public void fillSingleOptionCells() throws CellHasValueException {
         for (Cell cell : board) {
             if (cell.getOptions().size() == 1) {
                 cell.setValue(cell.getOptions().get(0));

@@ -2,6 +2,8 @@ package nl.sogyo.javaopdrachten.sudoku;
 
 import org.junit.jupiter.api.Test;
 
+import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class SubSetTest {
         assertEquals(2, returnedIndex);
     }
     @Test
-    void fillUniqueOptionsTest(){
+    void fillUniqueOptionsTest() throws CellHasValueException{
         SubSet subset = new SubSet(SubSetType.Row);
         for (int i =0;i<9;i++){
             subset.addCell(new Cell(1,1,0));

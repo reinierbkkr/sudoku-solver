@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
@@ -24,7 +26,7 @@ public class BoardTest {
     }
 
     @Test
-    void isChangedTestOneCellChanged(){
+    void isChangedTestOneCellChanged() throws CellHasValueException{
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
 
@@ -32,7 +34,7 @@ public class BoardTest {
     }
 
     @Test
-    void isChangedTest2CellsChanged(){
+    void isChangedTest2CellsChanged() throws CellHasValueException{
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
         b.board.get(3).setValue(3);
@@ -41,7 +43,7 @@ public class BoardTest {
     }
 
     @Test
-    void isChangedTestIfCellChangedReset(){
+    void isChangedTestIfCellChangedReset() throws CellHasValueException{
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
         b.board.get(3).setValue(3);
