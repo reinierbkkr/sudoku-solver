@@ -40,7 +40,7 @@ public class Cell {
 
     public void setValue(int value) throws CellHasValueException {
         if (this.value==0) {
-            System.out.printf("cell (row %d, col %d) set to value %d\n", this.row, this.column, value);
+//            System.out.printf("cell (row %d, col %d) set to value %d\n", this.row, this.column, value);
 
             this.value = value;
             options.clear();

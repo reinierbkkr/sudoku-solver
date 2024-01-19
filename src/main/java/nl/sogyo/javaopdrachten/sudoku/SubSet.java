@@ -3,6 +3,7 @@ package nl.sogyo.javaopdrachten.sudoku;
 import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SubSet {
@@ -81,6 +82,29 @@ public class SubSet {
 
     public void setCellValue (int index, int value) throws CellHasValueException{
         cells.get(index).setValue(value);
+    }
+
+    public boolean hasConflict (){
+        boolean hasConflict = false;
+        ArrayList<Integer> allValues = getAllValues();
+        for (int value = 1; value < 10; value++){
+            int freq = Collections.frequency(allValues,Integer.valueOf(value));
+            hasConflict = (freq>1);
+            if (hasConflict) {
+                break;
+            }
+        }
+        return hasConflict;
+    }
+
+    public ArrayList<Integer> getAllValues(){
+        ArrayList<Integer> allValues = new ArrayList<>();
+        for (Cell cell : cells){
+            if (cell.getValue() != 0) {
+                allValues.add(cell.getValue());
+            }
+        }
+        return allValues;
     }
 
 

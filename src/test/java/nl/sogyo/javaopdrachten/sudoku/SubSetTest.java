@@ -7,7 +7,7 @@ import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SubSetTest {
     @Test
@@ -64,6 +64,25 @@ public class SubSetTest {
         int returnedIndex = subset.checkIfValueOptionIsUnique(9, subset.getAllOptions());
 
         assertEquals(-1, returnedIndex);
+    }
+
+    @Test
+    void hasConflictTest(){
+        SubSet subset = new SubSet(SubSetType.Row);
+        subset.addCell(new Cell(1,1,1));
+        subset.addCell(new Cell(1,1,1));
+
+        assertTrue(subset.hasConflict());
+
+    }
+    @Test
+    void hasConflictNoConflictTest(){
+        SubSet subset = new SubSet(SubSetType.Row);
+        subset.addCell(new Cell(1,1,0));
+        subset.addCell(new Cell(1,1,0));
+
+        assertFalse(subset.hasConflict());
+
     }
 
 }
