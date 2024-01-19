@@ -1,23 +1,37 @@
 package nl.sogyo.javaopdrachten.sudoku;
 
+import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cell {
 
-    Integer value;
-    Integer row;
-    Integer col;
-    Integer square;
-    List<Integer> options = new ArrayList<>();
+    int value;
+    int row;
+    int column;
+    int block;
 
-    public Cell(Integer row, Integer col, Integer value){
+    boolean changed = false;
+
+    ArrayList<Integer> options = new ArrayList<>();
+
+    public Cell(int row, int column, int value) {
         this.row = row;
-        this.col = col;
+        this.column = column;
         this.value = value;
-        findSquare();
-        if (value == 0){
+        findBlock();
+        if (value == 0) {
             initializeOptions();
+        }
+    }
+
+    public boolean isChanged() {
+        if (changed) {
+            changed = false;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -25,98 +39,111 @@ public class Cell {
         return this.value;
     }
 
-    public void setValue(Integer value) {
-        System.out.printf("cell (row %d, col %d) set to value %d\n",this.row, this.col, value);
-
-        this.value = value;
-        options.clear();
+    public void setValue(int value) throws CellHasValueException {
+        if (this.value == 0) {
+            this.value = value;
+            options.clear();
+            changed = true;
+        } else {
+            throw new CellHasValueException();
+        }
     }
 
     public Integer getRow() {
         return this.row;
     }
 
-    public void setRow(Integer row) {
+    public void setRow(int row) {
         this.row = row;
     }
 
-    public Integer getCol() {
-        return this.col;
+    public Integer getColumn() {
+        return this.column;
     }
 
-    public void setCol(Integer col) {
-        this.col = col;
+    public void setColumn(int column) {
+        this.column = column;
     }
 
-    public Integer getSquare() {
-        return this.square;
+    public Integer getBlock() {
+        return this.block;
     }
 
-    public void setSquare(Integer square) {
-        this.square = square;
+    public void setBlock(Integer square) {
+        this.block = square;
     }
 
-    public List<Integer> getOptions() {
+    public ArrayList<Integer> getOptions() {
         return this.options;
     }
 
-    public void setOptions(List<Integer> options) {
+    public void setOptions(ArrayList<Integer> options) {
         this.options = options;
     }
 
-    public void initializeOptions(){
-        for (int i = 1; i < 10; i++) {
-            options.add(i);
-            
+    public void initializeOptions() {
+        for (int value = 1; value < 10; value++) {
+            options.add(value);
         }
-        // System.out.println("this happens");
     }
 
-    public void removeOption(Integer value){
-        options.remove(value);
+    public void removeOption(int value) {
+        options.remove(Integer.valueOf(value));
     }
-    
-    public void findSquare(){
-        switch (findSquareRow()) {
+
+    public void findBlock() {
+        switch (findBlockRow()) {
+            case 0:
+                block = findBlockColumn();
+                break;
             case 1:
-                square = findSquareCol();
+                block = 3 + findBlockColumn();
                 break;
             case 2:
-                square = 3 + findSquareCol();
+                block = 6 + findBlockColumn();
+        }
+    }
+
+    public int findBlockColumn() {
+        int blockColumn = -1;
+        switch (column) {
+            case 0:
+            case 1:
+            case 2:
+                blockColumn = 0;
                 break;
             case 3:
-                square = 6 + findSquareCol();
+            case 4:
+            case 5:
+                blockColumn = 1;
+                break;
+            case 6:
+            case 7:
+            case 8:
+                blockColumn = 2;
         }
+        return blockColumn;
     }
 
-    public Integer findSquareCol(){
-        Integer squareCol = null;
-        switch (col) {
-            case 1: case 2: case 3:
-                squareCol = 1;
-                break;
-            case 4: case 5: case 6:
-                squareCol = 2;
-                break;
-            case 7: case 8: case 9:
-                squareCol = 3;
-        }
-        return squareCol;
-    }
-
-    public Integer findSquareRow(){
-        Integer squareRow = null;
+    public int findBlockRow() {
+        int blockRow = -1;
         switch (row) {
-            case 1: case 2: case 3:
-                squareRow = 1;
+            case 0:
+            case 1:
+            case 2:
+                blockRow = 0;
                 break;
-            case 4: case 5: case 6:
-                squareRow = 2;
+            case 3:
+            case 4:
+            case 5:
+                blockRow = 1;
                 break;
-            case 7: case 8: case 9:
-                squareRow = 3;
+            case 6:
+            case 7:
+            case 8:
+                blockRow = 2;
         }
-        return squareRow;
+        return blockRow;
     }
 
 }
