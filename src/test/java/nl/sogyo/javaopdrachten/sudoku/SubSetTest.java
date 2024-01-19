@@ -10,7 +10,18 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SubSetTest {
+    @Test
+    void removeAllOptionsTest() throws CellHasValueException{
+        SubSet subset = new SubSet(SubSetType.Row);
+        for (int i =0;i<9;i++){
+            subset.addCell(new Cell(1,1,0));
+        }
+        subset.setCellValue(0,1);
+        subset.setCellValue(1,2);
+        subset.removeAllOptions();
 
+        assertEquals(7, subset.getCell(2).getOptions().size());
+    }
     @Test
     void checkIfValueOptionIsUniqueTest(){
         SubSet subset = new SubSet(SubSetType.Row);

@@ -101,24 +101,8 @@ public class Board {
 //
 //    }
 
-//    public void run() {
-//        for (int i = 0; i < 1000; i++) {
-//
-//            for (int j = 0; j < 100; j++) {
-//                removeOptions();
-//                fillSingleOptionCells();
-//            }
-//            for (int k = 1; k < 10; k++) {
-//                if (k % 3 == 0) {
-//                    checkUniqueOptionsRow(k);
-//                } else if ((k + 1) % 3 == 0) {
-//                    checkUniqueOptionsCol(k);
-//                }
-//            }
-//        }
-//    }
 
-    public void fillSingleOptionCells() throws CellHasValueException {
+    public void setValueSingleOptionCells() throws CellHasValueException {
         for (Cell cell : board) {
             if (cell.getOptions().size() == 1) {
                 cell.setValue(cell.getOptions().get(0));
@@ -148,118 +132,10 @@ public class Board {
         return isChanged;
     }
 
-    public void removeOptions() {
-        checkOptionsSameRow();
-        checkOptionsSameCol();
-        checkOptionsSameSquare();
-    }
-
-//    public void checkUniqueOptionsCol(Integer col) {
-//        List<List<Integer>> alloptions = new ArrayList<>();
-//        for (Cell cell : board) {
-//            if (cell.getColumn().equals(col)) {
-//                alloptions.add(cell.getOptions());
-//            }
-//        }
-//        // System.out.println(alloptions.size());
-//        // if (col.equals(6)) {printoptions(alloptions);}
-//
-//        // Integer trial = 1;
-//
-//        for (Integer value = 1; value < 10; value++) { // iterate over all possible numbers
-//            int foundind = checkUniqueOptions(value, alloptions);
-//            if (foundind != 0) {
-//                System.out.printf("unique option found for col:\n");
-//                fillCell(value, foundind, col);
-//            }
-//        }
-//
-//    }
-
-//    public void checkUniqueOptionsRow(Integer row) {
-//        List<List<Integer>> alloptions = new ArrayList<>();
-//        for (Cell cell : board) {
-//            if (cell.getRow().equals(row)) {
-//                alloptions.add(cell.getOptions());
-//            }
-//        }
-//
-//        for (Integer value = 1; value < 10; value++) { // iterate over all possible numbers
-//            int foundind = checkUniqueOptions(value, alloptions);
-//            if (foundind != 0) {
-//                System.out.printf("unique option found for row:\n");
-//                fillCell(value, row, foundind);
-//            }
-//        }
-//
-//    }
-
-//    int checkUniqueOptions(Integer value, List<List<Integer>> alloptions) {
-//        int count = 0;
-//        int ind = 1;
-//        int foundind = 0;
-//        // System.out.print(trial);
-//        for (List<Integer> options : alloptions) { // iterate over all cells optionlists to check for number
-//
-//            if (options.contains(value)) { // if the trial number is in the list it is added to count
-//                foundind = ind; // and index stored
-//                count++;
-//            }
-//            ind++;
-//        }
-//        if (count != 1) {
-//            foundind = 0;
-//        }
-//        return foundind;
-//    }
-
-    public void checkOptionsSameCol() {
-        for (Cell cell : board) {
-            if (cell.getValue() != 0) {
-                Integer value = cell.getValue();
-                removeOptionsSameCol(cell.getColumn(), value);
-            }
-        }
-    }
-
-    public void removeOptionsSameCol(Integer col, Integer value) {
-        for (Cell cell : board) {
-            if (cell.getColumn().equals(col)) {
-                cell.removeOption(value);
-            }
-        }
-    }
-
-    public void checkOptionsSameRow() {
-        for (Cell cell : board) {
-            if (cell.getValue() != 0) {
-                Integer value = cell.getValue();
-                removeOptionsSameRow(cell.getRow(), value);
-            }
-        }
-    }
-
-    public void removeOptionsSameRow(Integer row, Integer value) {
-        for (Cell cell : board) {
-            if (cell.getRow().equals(row)) {
-                cell.removeOption(value);
-            }
-        }
-    }
-
-    public void checkOptionsSameSquare() {
-        for (Cell cell : board) {
-            if (cell.getValue() != 0) {
-                Integer value = cell.getValue();
-                removeOptionsSameSquare(cell.getBlock(), value);
-            }
-        }
-    }
-
-    public void removeOptionsSameSquare(Integer square, Integer value) {
-        for (Cell cell : board) {
-            if (cell.getBlock().equals(square)) {
-                cell.removeOption(value);
+    public void removeAllOptions() {
+        for (Map.Entry<SubSetType, List<SubSet>> entry : subSetListsMap.entrySet()) {
+            for (SubSet subset : entry.getValue()){
+                subset.removeAllOptions();
             }
         }
     }

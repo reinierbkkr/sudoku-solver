@@ -29,7 +29,13 @@ public class SubSet {
     public void addCell(Cell cell){
         cells.add(cell);
     }
-
+    public void removeAllOptions(){
+        for (Cell cell : cells){
+            if (cell.getValue()!=0){
+                removeOption(cell.getValue());
+            }
+        }
+    }
     public void removeOption(int value){
         for (Cell cell : cells){
             cell.removeOption(value);

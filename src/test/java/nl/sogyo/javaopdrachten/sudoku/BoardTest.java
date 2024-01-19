@@ -26,6 +26,22 @@ public class BoardTest {
     }
 
     @Test
+    void setRemoveOptionTest(){
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.removeAllOptions();
+
+        assertTrue(b.board.get(2).getOptions().size()!=9);
+    }
+    @Test
+    void setValueSingleOptionCellsTest() throws CellHasValueException{
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.removeAllOptions();
+        b.setValueSingleOptionCells();
+        assertTrue(b.isChanged());
+    }
+
+
+    @Test
     void isChangedTestOneCellChanged() throws CellHasValueException{
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.board.get(2).setValue(3);
