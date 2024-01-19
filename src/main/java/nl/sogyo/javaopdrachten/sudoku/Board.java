@@ -46,15 +46,6 @@ public class Board {
                 entry.getValue().add(new SubSet(entry.getKey()));
             }
         }
-
-//        subSets.put("rows", new ArrayList<>());
-//        subSets.put("cols", new ArrayList<>());
-//        subSets.put("blocks", new ArrayList<>());
-//        for (int i = 0; i < 9; i++) {
-//            subSets.get("rows").add(new ArrayList<>());
-//            subSets.get("cols").add(new ArrayList<>());
-//            subSets.get("blocks").add(new ArrayList<>());
-//        }
     }
 
     void fillSubSetsWithCells() {
@@ -126,47 +117,39 @@ public class Board {
 //    }
 
     public void fillSingleOptionCells() {
-        int ind = 1;
         for (Cell cell : board) {
-
-            // // this part is to print all options
-            // System.out.print(cell.getOptions().size()+" ");
-            // if (ind%9==0){
-            // System.out.println();
-            // }
-            // ind++;
-
             if (cell.getOptions().size() == 1) {
-                // System.out.printf("cell set to value");
                 cell.setValue(cell.getOptions().get(0));
             }
         }
     }
 
-    public void fillCell(Integer value, Integer row, Integer col) {
-        // System.out.printf("looking for cell at row %d col %d to give value
-        // %d\n",row,col, value);
-        for (Cell cell : board) {
-            if (cell.getRow().equals(row) && cell.getColumn().equals(col)) {
-                cell.setValue(value);
+    // denk niet meer nodig
+//    public void fillCell(Integer value, Integer row, Integer col) {
+//        // System.out.printf("looking for cell at row %d col %d to give value
+//        // %d\n",row,col, value);
+//        for (Cell cell : board) {
+//            if (cell.getRow().equals(row) && cell.getColumn().equals(col)) {
+//                cell.setValue(value);
+//            }
+//        }
+//
+//    }
+
+    public boolean isChanged(){
+        boolean isChanged = false;
+        for (Cell cell : board){
+            if (cell.isChanged()){
+                isChanged = true;
             }
         }
-
+        return isChanged;
     }
 
     public void removeOptions() {
         checkOptionsSameRow();
         checkOptionsSameCol();
         checkOptionsSameSquare();
-
-        // for (int i = 1; i < 10; i++) {
-        // checkUniqueOptionsCol(i);
-        // }
-
-        // for (int i = 1; i < 10; i++) {
-        // checkUniqueOptionsRow(i);
-        // }
-
     }
 
 //    public void checkUniqueOptionsCol(Integer col) {

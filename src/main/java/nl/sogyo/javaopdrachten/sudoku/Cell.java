@@ -9,8 +9,10 @@ public class Cell {
     int row;
     int column;
     int block;
-    ArrayList<Integer> options = new ArrayList<>();
 
+    boolean changed = false;
+
+    ArrayList<Integer> options = new ArrayList<>();
     public Cell(int row, int column, int value){
         this.row = row;
         this.column = column;
@@ -18,6 +20,15 @@ public class Cell {
         findBlock();
         if (value == 0){
             initializeOptions();
+        }
+    }
+
+    public boolean isChanged() {
+        if (changed) {
+            changed = false;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -30,6 +41,7 @@ public class Cell {
 
         this.value = value;
         options.clear();
+        changed = true;
     }
 
     public Integer getRow() {
