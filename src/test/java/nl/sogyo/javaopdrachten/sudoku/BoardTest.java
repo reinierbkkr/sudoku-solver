@@ -9,6 +9,23 @@ import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
+
+    @Test
+    void newBoardIdTest() {
+        // these tests can fail if you run then together with the other tests
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+
+        assertEquals(0, b.boardId);
+    }
+
+    @Test
+    void newBoardId1Test() {
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        Board b2 = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+
+        assertEquals(1, b2.boardId);
+    }
+
     @Test
     void initializeSubSetsTest() {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
@@ -161,31 +178,50 @@ public class BoardTest {
     }
 
     @Test
-    void detectNoSolutionTest() throws CellHasValueException {
-        Board b = new Board("500007010040100000190000000900000045000309006403006000730500000000002079010060000");
-        //added a 1 at index 12
-        b.solve();
-        b.detectNoSolution();
+    void detectHasSolutionTest() throws CellHasValueException {
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        b.detectHasSolution();
 
-
-        assertTrue(b.hasNoSolution());
+        assertTrue(b.hasSolution());
     }
 
     @Test
-    void detectNoSolutionUnableToSolveTest() throws CellHasValueException {
+    void detectHasSolutionUnableToSolveTest() throws CellHasValueException {
         Board b = new Board("500007010040000000190000000900000045000309006403006000730500000000002079010060000");
-        //added a 1 at index 12
         b.solve();
-        b.detectNoSolution();
-//        b.print();
-//        for (Cell cell : b.board){
-//            if (cell.getValue() == 0){System.out.print("_");} else {System.out.print(cell.getValue());}
-//            System.out.print(cell.getOptions().size()+" ");
-//        }
+        b.cells.get(1).options.clear();
 
-        assertFalse(b.hasNoSolution());
+//        b.detectHasSolution();
+//        b.print();
+//        int index = 0;
+//        for (Cell cell : b.cells){
+//            if (cell.getValue() == 0){System.out.print("_");} else {System.out.print(cell.getValue());}
+//            if (index == 1){cell.options.clear();}
+//            System.out.print(cell.getOptions().size()+" ");
+//            index++;
+//        }
+        b.detectHasSolution();
+
+
+        assertFalse(b.hasSolution());
     }
 
+    @Test
+    void getCellWithFewestOptionsTest() throws CellHasValueException {
+        Board b = new Board("500007010040000000190000000900000045000309006403006000730500000000002079010060000");
+        b.cells.get(1).removeOption(4);
+
+        assertEquals(8,b.getCellWithFewestOptions().getOptions().size());
+    }
+
+    @Test
+    void getBoardAsStringTest(){
+        String input = "650080090070301000310509020005000000030070002000030940004010005000207000000008730";
+        Board b = new Board(input);
+
+        assertEquals(input, b.getBoardAsString());
+
+    }
     @Test
     void solveEasySudokuTest() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
