@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    List<Cell> board = new ArrayList<>();
+    List<Cell> cells = new ArrayList<>();
     Map<SubSetType, List<SubSet>> subSetListsMap = new HashMap<SubSetType, List<SubSet>>() {{
         put(SubSetType.Row, new ArrayList<SubSet>());
         put(SubSetType.Column, new ArrayList<SubSet>());
@@ -18,7 +18,6 @@ public class Board {
     boolean changed = true;
     boolean conflict = false;
     boolean solved = false;
-
     boolean noSolution = false;
 
     public Board(String input) {
@@ -32,7 +31,7 @@ public class Board {
         int index = 0;
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                board.add(new Cell(row, column, values.get(index)));
+                cells.add(new Cell(row, column, values.get(index)));
                 index++;
             }
         }
@@ -56,7 +55,7 @@ public class Board {
     }
 
     void fillSubSetsWithCells() {
-        for (Cell cell : board) {
+        for (Cell cell : cells) {
             subSetListsMap.get(SubSetType.Row).get(cell.getRow()).addCell(cell);
             subSetListsMap.get(SubSetType.Column).get(cell.getColumn()).addCell(cell);
             subSetListsMap.get(SubSetType.Block).get(cell.getBlock()).addCell(cell);
@@ -97,7 +96,7 @@ public class Board {
 
 
     public void setValueSingleOptionCells() throws CellHasValueException {
-        for (Cell cell : board) {
+        for (Cell cell : cells) {
             if (cell.getOptions().size() == 1) {
                 cell.setValue(cell.getOptions().get(0));
             }
@@ -115,7 +114,7 @@ public class Board {
 
 
     public void detectChangedCell() {
-        for (Cell cell : board) {
+        for (Cell cell : cells) {
             if (cell.isChanged()) {
                 changed = true;
                 break;
@@ -157,8 +156,8 @@ public class Board {
             System.out.print("|");
             for (int j = 0; j < 9; j++) {
 
-                if (board.get(ind).value != 0) {
-                    System.out.print(" " + board.get(ind).value + " ");
+                if (cells.get(ind).value != 0) {
+                    System.out.print(" " + cells.get(ind).value + " ");
                 } else {
                     System.out.print("   ");
                 }
@@ -177,7 +176,7 @@ public class Board {
 
     public void detectSolved() {
         solved = true;
-        for (Cell cell : board) {
+        for (Cell cell : cells) {
             if (cell.getValue() == 0) {
                 solved = false;
                 break;
@@ -186,7 +185,7 @@ public class Board {
     }
 
     public void detectNoSolution(){
-        for (Cell cell : board) {
+        for (Cell cell : cells) {
             if (!cell.hasValue() && !cell.hasOptions()){
                 noSolution=true;
                 break;

@@ -30,7 +30,7 @@ public class BoardTest {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
         b.removeAllOptions();
 
-        assertTrue(b.board.get(2).getOptions().size() != 9);
+        assertTrue(b.cells.get(2).getOptions().size() != 9);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BoardTest {
     @Test
     void isChangedTestOneCellChanged() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
-        b.board.get(2).setValue(3);
+        b.cells.get(2).setValue(3);
         b.detectChangedCell();
 
         assertTrue(b.changed);
@@ -70,8 +70,8 @@ public class BoardTest {
     @Test
     void isChangedTest2CellsChanged() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
-        b.board.get(2).setValue(3);
-        b.board.get(3).setValue(3);
+        b.cells.get(2).setValue(3);
+        b.cells.get(3).setValue(3);
 
         b.detectChangedCell();
 
@@ -81,8 +81,8 @@ public class BoardTest {
     @Test
     void isChangedTest() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
-        b.board.get(2).setValue(3);
-        b.board.get(3).setValue(3);
+        b.cells.get(2).setValue(3);
+        b.cells.get(3).setValue(3);
 
         b.detectChangedCell();
 
@@ -207,9 +207,9 @@ public class BoardTest {
     @Test
     void solveHardestSudokuTest() throws CellHasValueException {
         Board b = new Board("500007010040000000190000000900000045000309006403006000730500000000002079010060000");
-        b.print();
+//        b.print();
         b.solve();
-        b.print();
-//        assertTrue(b.solved);
+//        b.print();
+//        assertTrue(b.solved); // this cannot be solved yet
     }
 }
