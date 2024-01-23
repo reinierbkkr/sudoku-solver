@@ -8,22 +8,33 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
+
+    static int BoardIdSource = 0;
     List<Cell> cells = new ArrayList<>();
+
     Map<SubSetType, List<SubSet>> subSetListsMap = new HashMap<SubSetType, List<SubSet>>() {{
         put(SubSetType.Row, new ArrayList<SubSet>());
         put(SubSetType.Column, new ArrayList<SubSet>());
         put(SubSetType.Block, new ArrayList<SubSet>());
     }};
+    int boardId = 0;
 
     boolean changed = true;
     boolean conflict = false;
     boolean solved = false;
     boolean noSolution = false;
-
     public Board(String input) {
+        boardId = newBoardId();
+
         makeBoard(input);
         initializeSubSetsInSubSetLists();
         fillSubSetsWithCells();
+    }
+
+    public static int newBoardId(){
+        int newBoardId = BoardIdSource;
+        BoardIdSource++;
+        return newBoardId;
     }
 
     public void makeBoard(String input) {
