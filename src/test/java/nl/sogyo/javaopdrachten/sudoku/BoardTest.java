@@ -9,6 +9,23 @@ import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
+
+    @Test
+    void newBoardIdTest() {
+        // these tests can fail if you run then together with the other tests
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+
+        assertEquals(0, b.boardId);
+    }
+
+    @Test
+    void newBoardId1Test() {
+        Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+        Board b2 = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
+
+        assertEquals(1, b2.boardId);
+    }
+
     @Test
     void initializeSubSetsTest() {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
