@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-
     static int BoardIdSource = 0;
     List<Cell> cells = new ArrayList<>();
 
@@ -22,7 +21,7 @@ public class Board {
     boolean changed = true;
     boolean conflict = false;
     boolean solved = false;
-    boolean noSolution = false;
+    boolean hasSolution = true;
     public Board(String input) {
         boardId = newBoardId();
 
@@ -73,8 +72,8 @@ public class Board {
         }
     }
 
-    public boolean hasNoSolution() {
-        return noSolution;
+    public boolean hasSolution() {
+        return hasSolution;
     }
 
     void solve() throws CellHasValueException {
@@ -195,13 +194,32 @@ public class Board {
         }
     }
 
-    public void detectNoSolution(){
+    public void detectHasSolution(){
         for (Cell cell : cells) {
             if (!cell.hasValue() && !cell.hasOptions()){
-                noSolution=true;
+                hasSolution = false;
                 break;
             }
         }
+    }
+
+    public Cell getCellWithFewestOptions(){
+        Cell chosenCell = firstCellWithOptions();
+        for (Cell cell:cells){
+            if (cell.hasOptions() && cell.getOptions().size() < chosenCell.getOptions().size()){
+                chosenCell = cell;
+            }
+        }
+        return chosenCell;
+    }
+
+    public Cell firstCellWithOptions(){
+        for (Cell cell : cells){
+            if (cell.hasOptions()){
+                return cell;
+            }
+        }
+        return new Cell(8,8,10); //this should never happen
     }
 
 }
