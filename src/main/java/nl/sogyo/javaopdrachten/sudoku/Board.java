@@ -16,9 +16,10 @@ public class Board {
     }};
 
     boolean changed = true;
-
     boolean conflict = false;
     boolean solved = false;
+
+    boolean noSolution = false;
 
     public Board(String input) {
         makeBoard(input);
@@ -62,6 +63,10 @@ public class Board {
         }
     }
 
+    public boolean hasNoSolution() {
+        return noSolution;
+    }
+
     void solve() throws CellHasValueException {
         detectConflict();
         int simplecounter = 0;
@@ -87,7 +92,7 @@ public class Board {
         if (conflict) {
             System.out.println("Conflict!");
         }
-        System.out.printf("End. Simple loops %d, complex loops %d.\n", simplecounter, complexcounter);
+//        System.out.printf("End. Simple loops %d, complex loops %d.\n", simplecounter, complexcounter);
     }
 
 
@@ -175,6 +180,15 @@ public class Board {
         for (Cell cell : board) {
             if (cell.getValue() == 0) {
                 solved = false;
+                break;
+            }
+        }
+    }
+
+    public void detectNoSolution(){
+        for (Cell cell : board) {
+            if (!cell.hasValue() && !cell.hasOptions()){
+                noSolution=true;
                 break;
             }
         }

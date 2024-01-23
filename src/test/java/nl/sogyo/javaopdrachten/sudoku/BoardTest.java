@@ -161,6 +161,32 @@ public class BoardTest {
     }
 
     @Test
+    void detectNoSolutionTest() throws CellHasValueException {
+        Board b = new Board("500007010040100000190000000900000045000309006403006000730500000000002079010060000");
+        //added a 1 at index 12
+        b.solve();
+        b.detectNoSolution();
+
+
+        assertTrue(b.hasNoSolution());
+    }
+
+    @Test
+    void detectNoSolutionUnableToSolveTest() throws CellHasValueException {
+        Board b = new Board("500007010040000000190000000900000045000309006403006000730500000000002079010060000");
+        //added a 1 at index 12
+        b.solve();
+        b.detectNoSolution();
+//        b.print();
+//        for (Cell cell : b.board){
+//            if (cell.getValue() == 0){System.out.print("_");} else {System.out.print(cell.getValue());}
+//            System.out.print(cell.getOptions().size()+" ");
+//        }
+
+        assertFalse(b.hasNoSolution());
+    }
+
+    @Test
     void solveEasySudokuTest() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
 //        b.print();

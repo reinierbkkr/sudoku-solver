@@ -3,7 +3,6 @@ package nl.sogyo.javaopdrachten.sudoku;
 import nl.sogyo.javaopdrachten.sudoku.exceptions.CellHasValueException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Cell {
 
@@ -89,6 +88,14 @@ public class Cell {
 
     public void removeOption(int value) {
         options.remove(Integer.valueOf(value));
+    }
+
+    public boolean hasValue(){
+        return value != 0;
+    }
+
+    public boolean hasOptions(){
+        return options.size() != 0;
     }
 
     public void findBlock() {
