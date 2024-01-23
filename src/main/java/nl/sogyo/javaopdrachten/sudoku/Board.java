@@ -16,14 +16,28 @@ public class Board {
         put(SubSetType.Column, new ArrayList<SubSet>());
         put(SubSetType.Block, new ArrayList<SubSet>());
     }};
+
     int boardId = 0;
 
+    int parentId;
+
     boolean changed = true;
+
     boolean conflict = false;
+
     boolean solved = false;
     boolean hasSolution = true;
     public Board(String input) {
         boardId = newBoardId();
+
+        makeBoard(input);
+        initializeSubSetsInSubSetLists();
+        fillSubSetsWithCells();
+    }
+
+    public Board(String input, int parentId) {
+        boardId = newBoardId();
+        this.parentId = parentId;
 
         makeBoard(input);
         initializeSubSetsInSubSetLists();
@@ -72,6 +86,14 @@ public class Board {
         }
     }
 
+    public int getBoardId() {
+        return boardId;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
     public boolean hasSolution() {
         return hasSolution;
     }
@@ -81,8 +103,8 @@ public class Board {
         int simplecounter = 0;
         int complexcounter = 0;
 
-        while (!conflict && !solved && changed) {
-            while (!conflict && !solved && changed) {
+        while (!conflict && !solved && changed && hasSolution) {
+            while (!conflict && !solved && changed && hasSolution) {
                 detectConflict();
                 removeAllOptions();
                 setValueSingleOptionCells();
@@ -95,6 +117,7 @@ public class Board {
             complexcounter++;
             detectSolved();
         }
+        detectHasSolution();
         if (solved) {
             System.out.println("Solved!");
         }
@@ -220,6 +243,24 @@ public class Board {
             }
         }
         return new Cell(8,8,10); //this should never happen
+    }
+
+    public String getBoardAsString(){
+        String board = "";
+        for (Cell cell : cells){
+            board += cell.getValue();
+        }
+        return board;
+    }
+
+    public void detectState(){
+        detectSolved();
+        detectConflict();
+        detectHasSolution();
+    }
+
+    public void printState(){
+        System.out.printf("Solved: %b; Conflict: %b; Solution possible: %b\n",solved,conflict,hasSolution);
     }
 
 }

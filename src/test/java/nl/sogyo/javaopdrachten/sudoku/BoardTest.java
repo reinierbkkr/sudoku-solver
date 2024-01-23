@@ -215,6 +215,14 @@ public class BoardTest {
     }
 
     @Test
+    void getBoardAsStringTest(){
+        String input = "650080090070301000310509020005000000030070002000030940004010005000207000000008730";
+        Board b = new Board(input);
+
+        assertEquals(input, b.getBoardAsString());
+
+    }
+    @Test
     void solveEasySudokuTest() throws CellHasValueException {
         Board b = new Board("650080090070301000310509020005000000030070002000030940004010005000207000000008730");
 //        b.print();

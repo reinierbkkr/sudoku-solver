@@ -153,4 +153,8 @@ public class Cell {
         return blockRow;
     }
 
+    public int getBoardIndex(){
+        return row*9+column;
+    }
+
 }
