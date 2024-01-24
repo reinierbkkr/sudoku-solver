@@ -35,6 +35,14 @@ public class Board {
         fillSubSetsWithCells();
     }
 
+    public Board(String input, boolean invert) {
+        boardId = newBoardId();
+
+        makeBoard(input, invert);
+        initializeSubSetsInSubSetLists();
+        fillSubSetsWithCells();
+    }
+
     public Board(String input, int parentId) {
         boardId = newBoardId();
         this.parentId = parentId;
@@ -52,6 +60,15 @@ public class Board {
 
     public void makeBoard(String input) {
         List<Integer> values = inputToList(input);
+        setValuesInBoard(values);
+    }
+
+    public void makeBoard(String input, boolean invert) {
+        List<Integer> values = inputToList(input, invert);
+        setValuesInBoard(values);
+    }
+
+    private void setValuesInBoard(List<Integer> values) {
         int index = 0;
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
@@ -71,6 +88,27 @@ public class Board {
             values.add(Integer.parseInt(value));
         }
         return values;
+    }
+
+    public static List<Integer> inputToList(String input, boolean invert){
+        List<Integer> list = inputToList(input);
+        if (!invert) {
+            return list;
+        } else {
+            return invertValues(list);
+        }
+    }
+
+    public static List<Integer> invertValues(List<Integer> list) {
+        List<Integer> invertedlist = new ArrayList<>();
+        for (Integer value : list){
+            if (value != 0){
+                invertedlist.add(10-value);
+            } else {
+                invertedlist.add(0);
+            }
+        }
+        return invertedlist;
     }
 
     void initializeSubSetsInSubSetLists() {

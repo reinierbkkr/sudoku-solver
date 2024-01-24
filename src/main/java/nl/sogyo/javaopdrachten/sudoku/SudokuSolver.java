@@ -17,6 +17,11 @@ public class SudokuSolver {
         currentBoardId = currentBoard.getBoardId();
     }
 
+    public SudokuSolver(String input, boolean invert){
+        currentBoard = new Board(input, invert);
+        currentBoardId = currentBoard.getBoardId();
+    }
+
     public void tryToSolve() throws CellHasValueException {
         currentBoard.solve();
 //        currentBoard.print();

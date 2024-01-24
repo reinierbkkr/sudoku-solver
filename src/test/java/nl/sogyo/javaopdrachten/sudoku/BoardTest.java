@@ -248,4 +248,17 @@ public class BoardTest {
 //        b.print();
 //        assertTrue(b.solved); // this cannot be solved yet
     }
+
+    @Test
+    void invertTest(){
+        String input = "500007010040000000190000000900000045000309006403006000730500000000002079010060000";
+        List<Integer> list = Board.inputToList(input);
+        List<Integer> invertedlist = Board.invertValues(list);
+
+
+        assertEquals(3, invertedlist.get(5));
+        assertEquals(0, invertedlist.get(1));
+
+
+    }
 }
