@@ -65,6 +65,9 @@ public class Board {
         List<Integer> values = new ArrayList<>();
         String[] splitinput = input.split("");
         for (String value : splitinput) {
+            if (value.equals(".")){
+                value = "0";
+            }
             values.add(Integer.parseInt(value));
         }
         return values;
